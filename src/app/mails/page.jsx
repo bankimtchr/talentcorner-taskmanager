@@ -59,6 +59,10 @@ const MailsPage = () => {
             //     setError("Maximum retry attempts reached"); // Set error message for maximum retries
             // }
         }
+        finally {
+            setLoading(false);
+            setError("");
+        }
     };
 
     useEffect(() => {
@@ -82,6 +86,10 @@ const MailsPage = () => {
                 // console.log("error in getting all users in /mails", err)
                 setLoading(false);
                 setError(err);
+            }
+            finally {
+                setLoading(false);
+                setError("");
             }
         }
         fetchteamleaders();
@@ -135,6 +143,12 @@ const MailsPage = () => {
         } catch (error) {
             // return { error, status: 500 }
             setError(error)
+            setLoading(false);
+            // console.error('Error updating company:', error.message);
+        }
+        finally {
+            // return { error, status: 500 }
+            setError("")
             setLoading(false);
             // console.error('Error updating company:', error.message);
         }

@@ -88,12 +88,13 @@ const TLDashboardPage = () => {
                     setFranchise(franchisedata[0]);
 
                     setError("");
-                    // setLoading(false);
                 } catch (error) {
                     // setError("No data of this franchise");
                     setError("");
-                    // setLoading(false);
                     // console.error("Error fetching revenue:", error);
+                }
+                finally {
+                    setError("");
                 }
             }
         };
@@ -176,6 +177,32 @@ const TLDashboardPage = () => {
                     setError("");
                     // setLoading(false);
                 }
+                finally {
+                    const statusCount = {
+                        'In Progress': 0,
+                        'Hold': 0,
+                        'Cancel': 0,
+                        'Closed': 0
+                    };
+
+                    const statusData = Object.values(statusCount);
+
+                    setChartData({
+                        datasets: [{
+                            data: statusData,
+                            backgroundColor: [
+                                'yellow',
+                                'blue',
+                                'red',
+                                'green',
+                            ]
+                        }],
+                        labels: ['In Progress', 'Hold', 'Cancel', 'Closed']
+                    });
+                    // console.error("Error fetching data:", error);
+                    // setError("No data of this franchise");
+                    setError("");
+                }
             }
         };
 
@@ -213,6 +240,12 @@ const TLDashboardPage = () => {
                     // setLoading(false);
                     // console.error("Error fetching revenue:", error);
                 }
+                finally {
+                    setRevenuegained(0);
+                    setRevenuelost(0)
+                    // setError("No data of this franchise");
+                    setError("");
+                }
             }
         };
 
@@ -240,6 +273,10 @@ const TLDashboardPage = () => {
             // console.log("error in getting all users in /dashboardtl", err)
             setLoading(false);
             setError(err);
+        }
+        finally {
+            setLoading(false);
+            setError("")
         }
     }
 
@@ -312,6 +349,10 @@ const TLDashboardPage = () => {
                     setLoading(false);
                     // console.log("error in updating count")
                 }
+                finally {
+                    setError("");
+                    setLoading(false);
+                }
             }
             else {
                 // console.log("error in sending email:", res.json);
@@ -343,6 +384,10 @@ const TLDashboardPage = () => {
             setError("");
             setLoading(false);
             // console.log("error in sending email in frontend:", err);
+        }
+        finally {
+            setError("");
+            setLoading(false);
         }
     }
 

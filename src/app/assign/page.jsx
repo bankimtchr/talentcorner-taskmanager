@@ -66,6 +66,10 @@ const AssignPage = () => {
             //     setError("Maximum retry attempts reached"); // Set error message for maximum retries
             // }
         }
+        finally {
+            setError("")
+            setLoading(false);
+        }
     };
 
     //fetching all companies and filtering companies assigned to me

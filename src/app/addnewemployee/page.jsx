@@ -80,11 +80,15 @@ const AddNewEmployeePage = () => {
                     // setError("please wait");
                     setLoading(false);
                 }
+
             }
             catch (err) {
                 // setError("no data found");
                 setLoading(false);
                 // console.log("error in getting all users:", err);
+            }
+            finally {
+                setLoading(false);
             }
         }
         getUsers();

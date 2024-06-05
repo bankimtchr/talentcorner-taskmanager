@@ -69,6 +69,9 @@ const DashboardFRPage = () => {
             // setLoading(false);
             // console.log("error in getting my companies:", err);
         }
+        finally {
+            setError("");
+        }
     }
 
     const getMyData = async () => {
@@ -101,6 +104,9 @@ const DashboardFRPage = () => {
             setError("no data found");
             // setLoading(false);
             // console.log("error in getting my companies:", err);
+        }
+        finally {
+            setError("");
         }
     }
     useEffect(() => {
@@ -165,6 +171,9 @@ const DashboardFRPage = () => {
             setLoading(false);
             // console.log("error while rejected company:", err);
         }
+        finally {
+            setLoading(false);
+        }
         setLoading(false);
     }
 
@@ -219,6 +228,9 @@ const DashboardFRPage = () => {
             setLoading(false);
             // console.log("error while accepting company:", err);
         }
+        finally {
+            setLoading(false);
+        }
 
         setLoading(false);
     }
@@ -270,6 +282,9 @@ const DashboardFRPage = () => {
             // console.log("error while accepting company:", err);
         }
 
+        finally {
+            setLoading(false);
+        }
         setLoading(false);
     }
 

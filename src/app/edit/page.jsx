@@ -51,56 +51,83 @@ const EditPage = () => {
         }
     }, [session, status, router]);
 
+    // const getUsers = async () => {
+    //     // console.log("getusers called")
+    //     try {
+    //         setLoading(true);
+
+    //         const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/user`);
+    //         // console.log("res:", res);
+    //         if (res.status === 200 || res.status === 201) {
+    //             const allusers = res.data;
+    //             setUsers(allusers);
+
+    //             const allbds = allusers?.filter((u) => u?.role === "bd");
+    //             setBds(allbds);
+    //             // console.log("allbds:", allbds);
+
+    //             const alltls = allusers?.filter((u) => u?.role === "tl");
+    //             setTls(alltls);
+    //             // console.log("alltls:", alltls);
+
+    //             const allshs = allusers?.filter((u) => u?.role === "sh");
+    //             setShs(allshs);
+    //             // console.log("allshs:", allshs);
+
+    //             const allads = allusers?.filter((u) => u?.role === "ad");
+    //             setAds(allads);
+    //             // console.log("allads:", allads);
+
+    //             // setError("")
+    //             setLoading(false);
+
+    //         }
+    //         else {
+    //             // setError("please wait");
+    //             setLoading(false);
+    //         }
+    //     }
+    //     catch (err) {
+    //         // setError("no data found");
+    //         setLoading(false);
+    //         // console.log("error in getting all users:", err);
+    //     }
+    // }
+
     const getUsers = async () => {
-        // console.log("getusers called")
         try {
-            setLoading(true);
+            const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/user`);
+            console.log("response:", response);
+            const allusers = response.data;
+            setUsers(allusers);
 
-            const url = `${process.env.NEXTAUTH_URL}/api/user`;
-            const res = await axios({
-                method: "GET",
-                url,
-            });
-            // console.log("res:", res);
-            if (res.status === 200 || res.status === 201) {
-                const allusers = res.data;
-                setUsers(allusers);
+            const allbds = allusers?.filter((u) => u?.role === "bd");
+            setBds(allbds);
+            // console.log("allbds:", allbds);
 
-                const allbds = allusers?.filter((u) => u?.role === "bd");
-                setBds(allbds);
-                // console.log("allbds:", allbds);
+            const alltls = allusers?.filter((u) => u?.role === "tl");
+            setTls(alltls);
+            // console.log("alltls:", alltls);
 
-                const alltls = allusers?.filter((u) => u?.role === "tl");
-                setTls(alltls);
-                // console.log("alltls:", alltls);
+            const allshs = allusers?.filter((u) => u?.role === "sh");
+            setShs(allshs);
+            // console.log("allshs:", allshs);
 
-                const allshs = allusers?.filter((u) => u?.role === "sh");
-                setShs(allshs);
-                // console.log("allshs:", allshs);
+            const allads = allusers?.filter((u) => u?.role === "ad");
+            setAds(allads);
+            // console.log("allads:", allads);
 
-                const allads = allusers?.filter((u) => u?.role === "ad");
-                setAds(allads);
-                // console.log("allads:", allads);
-
-                // setError("")
-                setLoading(false);
-
-            }
-            else {
-                // setError("please wait");
-                setLoading(false);
-            }
-        }
-        catch (err) {
-            // setError("no data found");
+        } catch (error) {
+            console.error("Error fetching users:", error);
             setLoading(false);
-            // console.log("error in getting all users:", err);
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         getUsers();
-    }, [])
+    }, []);
 
     const selectRole = (e) => {
         setUserDetails({});

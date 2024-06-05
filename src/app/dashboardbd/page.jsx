@@ -84,6 +84,9 @@ const DashboardBD = () => {
             // console.log(error);
             setError("Failed to post a company"); // Set error message for API request failure
         }
+        finally {
+            setLoading(false);
+        }
     };
 
     const getCompanies = async () => {
@@ -122,7 +125,11 @@ const DashboardBD = () => {
             //     setError("Maximum retry attempts reached"); // Set error message for maximum retries
             // }
         }
+        finally {
+            setLoading(false);
+        }
     }
+
     useEffect(() => {
         getCompanies();
     }, [status]);

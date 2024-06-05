@@ -109,6 +109,9 @@ const DashboardADPage = () => {
             // console.log("error in getting all users in /dashboardtl", err)
             setLoading(false);
         }
+        finally {
+            setLoading(false);
+        }
     }
 
     // Function to generate random color
@@ -125,6 +128,9 @@ const DashboardADPage = () => {
             } catch (error) {
                 // console.error("Error fetching users:", error);
             }
+            finally {
+
+            }
         };
         getAllFranchiseUnderMe();
     }, [selectedTL])
@@ -138,6 +144,9 @@ const DashboardADPage = () => {
         } catch (error) {
             // console.error("Error fetching users:", error);
         }
+        finally {
+
+        }
     };
 
     const SelectTL = async (e) => {
@@ -149,9 +158,9 @@ const DashboardADPage = () => {
         if (selectedFR !== "") {
             const fetchSheetData = async (e) => {
                 try {
-                    console.log("sheetdata")
+                    // console.log("sheetdata")
                     const url = session?.user?.deployedlink;
-                    console.log("session.user.deployedlink:", session?.user?.deployedlink);
+                    // console.log("session.user.deployedlink:", session?.user?.deployedlink);
                     const response = await axios({
                         url,
                     });
@@ -163,20 +172,20 @@ const DashboardADPage = () => {
                     //     },
                     //     body: JSON.stringify({ url })
                     // })
-                    console.log("response:", response)
-                    console.log("selecetedFR:", selectedFR);
+                    // console.log("response:", response)
+                    // console.log("selecetedFR:", selectedFR);
                     const data = await response.json();
-                    console.log("data from sheetdAta:", data);
+                    // console.log("data from sheetdAta:", data);
                     setUserData(data);
 
                     const selectedFRNormalized = selectedFR.replace(/\s+/g, '').toLowerCase();
-                    console.log("normalized selectedfr:", selectedFRNormalized);
+                    // console.log("normalized selectedfr:", selectedFRNormalized);
 
                     const dataKeysNormalized = Object.keys(data).reduce((acc, key) => {
                         acc[key.replace(/\s+/g, '').toLowerCase()] = data[key];
                         return acc;
                     }, {});
-                    console.log("dataKeyNormalized:", dataKeysNormalized);
+                    // console.log("dataKeyNormalized:", dataKeysNormalized);
 
                     if (dataKeysNormalized.hasOwnProperty(selectedFRNormalized)) {
                         const clientData = dataKeysNormalized[selectedFRNormalized];
@@ -298,6 +307,9 @@ const DashboardADPage = () => {
 
                 } catch (error) {
                     // console.error("Error fetching data:", error);
+                }
+                finally {
+
                 }
             }
             fetchSheetData();
@@ -467,25 +479,28 @@ const DashboardADPage = () => {
                     // setLoading(false);
                     // console.error("Error fetching revenue:", error);
                 }
+                finally {
+
+                }
             }
         };
 
         fetchUserDetails();
 
         const fetchRevenue = async () => {
-            console.log("franchise revenue cal")
+            // console.log("franchise revenue cal")
             if (session?.user) {
                 try {
                     // setLoading(true);
                     // console.log('franchise teamleadername:', franchise?.teamleadername);
                     const teamleaderarr = users?.filter((user) => user?.role === "tl" && user?.username === franchise?.teamleadername)
                     // console.log("users:", users);
-                    console.log("teamleaderarr:", teamleaderarr)
+                    // console.log("teamleaderarr:", teamleaderarr)
                     const url = teamleaderarr[0].deployedlink;
                     const response = await fetch(url);
 
                     const data = await response.json();
-                    console.log('data: ', data);
+                    // console.log('data: ', data);
 
                     const franchiseData = data?.filter((d) => d?.nameoffranchisee.replace(/\s/g, '').toLowerCase() === selectedFR.replace(/\s/g, '').toLowerCase());
                     // console.log("franchiseData:", franchiseData);
@@ -500,6 +515,10 @@ const DashboardADPage = () => {
                     setRevenuegained(rg);
                     setRevenuelost(rl);
                 } catch (error) {
+                    setRevenuegained(0);
+                    setRevenuelost(0)
+                }
+                finally {
                     setRevenuegained(0);
                     setRevenuelost(0)
                 }
@@ -578,6 +597,9 @@ const DashboardADPage = () => {
                     setLoading(false);
                     // console.log("error in updating count")
                 }
+                finally {
+                    setLoading(false);
+                }
             }
             else {
                 // console.log("error in sending email:", res.json);
@@ -609,6 +631,9 @@ const DashboardADPage = () => {
             // setError("");
             setLoading(false);
             // console.log("error in sending email in frontend:", err);
+        }
+        finally {
+            setLoading(false);
         }
     }
 
@@ -714,6 +739,9 @@ const DashboardADPage = () => {
                 theme: "light",
             });
             // setError("");
+        }
+        finally {
+            setLoading(false);
         }
 
         setLoading(false);

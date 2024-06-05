@@ -55,6 +55,10 @@ const DashboardSHPage = () => {
             //     setError("Maximum retry attempts reached"); // Set error message for maximum retries
             // }
         }
+        finally {
+            setLoading(false);
+            setError("");
+        }
     };
 
     useEffect(() => {
