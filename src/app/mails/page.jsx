@@ -19,7 +19,10 @@ const MailsPage = () => {
         if (status !== "loading" && !session) {
             router.push("/login")
         }
-        else if (status !== "loading") {
+        else {
+            if (status !== "loading" && session?.user?.role !== "sh") {
+                router.back();
+            }
             setLoading(false);
         }
     }, [session, status, router]);
@@ -233,7 +236,7 @@ const MailsPage = () => {
 
                     <nav >
                         <ul className="pagination flex mt-4 flex-wrap">
-                            <li className="page-item border-y-[1px] border-black py-1 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
+                            <li className="page-item border-y-[1px] border-black py-2 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
                                 <a href="#" className="page-link" >Prev</a>
                             </li>
                             <div className="flex flex-wrap">

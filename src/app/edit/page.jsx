@@ -47,6 +47,9 @@ const EditPage = () => {
             router.push("/login")
         }
         else {
+            if (status !== "loading" && session?.user?.role !== "ad") {
+                router.back();
+            }
             setLoading(false);
         }
     }, [session, status, router]);

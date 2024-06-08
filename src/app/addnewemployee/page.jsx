@@ -38,13 +38,17 @@ const AddNewEmployeePage = () => {
         spreadsheet: "",
         deployedlink: "",
         revenueapi: "",
-        preference: ""
+        preference: "",
+        status: "",
     })
     useEffect(() => {
         if (status !== "loading" && !session) {
             router.push("/login")
         }
         else {
+            if (status !== "loading" && session?.user?.role !== "ad") {
+                router.back();
+            }
             setLoading(false);
         }
     }, [session, status, router]);

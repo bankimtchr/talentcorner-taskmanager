@@ -35,6 +35,7 @@ const DashboardADPage = () => {
     const [franchise, setFranchise] = useState({});
     const [revenuegained, setRevenuegained] = useState(0);
     const [revenuelost, setRevenuelost] = useState(0);
+    const [revenue, setRevenue] = useState({ lost: 0, gained: 0 })
     const [userData, setUserData] = useState({});
     const [cityData, setCityData] = useState({});
     const [stateData, setStateData] = useState({});
@@ -86,6 +87,9 @@ const DashboardADPage = () => {
             router.push("/login")
         }
         else {
+            if (status !== "loading" && session?.user?.role !== "ad") {
+                router.back();
+            }
             setLoading(false);
             getUsers();
         }
@@ -160,10 +164,9 @@ const DashboardADPage = () => {
                 try {
                     // console.log("sheetdata")
                     const url = session?.user?.deployedlink;
-                    // console.log("session.user.deployedlink:", session?.user?.deployedlink);
-                    const response = await axios({
-                        url,
-                    });
+                    console.log("session.user.deployedlink:", session?.user?.deployedlink);
+
+                    const response = await fetch(url);
 
                     // const response = await fetch("/api/fetchAppscript", {
                     //     method: "POST",
@@ -175,7 +178,7 @@ const DashboardADPage = () => {
                     // console.log("response:", response)
                     // console.log("selecetedFR:", selectedFR);
                     const data = await response.json();
-                    // console.log("data from sheetdAta:", data);
+                    console.log("data from sheetdAta:", data);
                     setUserData(data);
 
                     const selectedFRNormalized = selectedFR.replace(/\s+/g, '').toLowerCase();
@@ -494,9 +497,10 @@ const DashboardADPage = () => {
                     // setLoading(true);
                     // console.log('franchise teamleadername:', franchise?.teamleadername);
                     const teamleaderarr = users?.filter((user) => user?.role === "tl" && user?.username === franchise?.teamleadername)
-                    // console.log("users:", users);
                     // console.log("teamleaderarr:", teamleaderarr)
-                    const url = teamleaderarr[0].deployedlink;
+
+                    const url = teamleaderarr[0].revenueapi;
+                    // console.log("url:", url);
                     const response = await fetch(url);
 
                     const data = await response.json();
@@ -509,18 +513,26 @@ const DashboardADPage = () => {
                     // console.log("statusEntry:", statusEntry);
 
                     //error handling for no url
-                    const rg = statusEntry.closed || 0;
-                    const rl = statusEntry.cancel || 0;
+                    let rg = 0;
+                    let rl = 0;
+                    rg = statusEntry.closed;
+                    rl = statusEntry.cancel;
+                    // console.log("rg:", rg);
 
-                    setRevenuegained(rg);
-                    setRevenuelost(rl);
+                    // setRevenuegained(rg);
+                    // setRevenuelost(rl);
+                    setRevenue((prev) => ({
+                        ...prev,
+                        lost: rl,
+                        gained: rg
+                    }));
                 } catch (error) {
-                    setRevenuegained(0);
-                    setRevenuelost(0)
+                    // setRevenuegained(0);
+                    // setRevenuelost(0)
                 }
                 finally {
-                    setRevenuegained(0);
-                    setRevenuelost(0)
+                    // setRevenuegained(0);
+                    // setRevenuelost(0)
                 }
             }
         };
@@ -666,7 +678,7 @@ const DashboardADPage = () => {
         // const users = await res.json();
 
 
-        const allfranchisee = users?.filter((user) => user.role === "fr");
+        const allfranchisee = users?.filter((user) => user.role === "fr" && user.status === "active");
 
         const emails = allfranchisee?.map(user => user.email);
         // console.log(emails);
@@ -840,7 +852,7 @@ const DashboardADPage = () => {
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.companiesRejected?.length === 0 ? 0 : franchise?.companiesRejected?.length}</div>
                             </div>
                             <div className="row flex justiy-start items-center w-full gap-4">
-                                <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Companies Rejected</label>
+                                <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Companies Reallocated</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.companiesReallocated?.length === 0 ? 0 : franchise?.companiesReallocated?.length}</div>
                             </div>
                             <div className="row flex justiy-start items-center w-full gap-4">
@@ -849,7 +861,11 @@ const DashboardADPage = () => {
                             </div>
                             <div className="row flex justiy-start items-center w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Preference</label>
-                                <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.preference || "select a franchise"}</div>
+                                <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.preference || "any"}</div>
+                            </div>
+                            <div className="row flex justiy-start items-center w-full gap-4">
+                                <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Status</label>
+                                <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.status || "active"}</div>
                             </div>
                         </div>
 
@@ -858,11 +874,11 @@ const DashboardADPage = () => {
                             <div className="franchiserevenue flex justify-center items-center flex-col gap-4 lg:flex-row lg:gap-2 w-full">
                                 <div className="revenuegained flex flex-col justify-center items-center bg-green-500 rounded w-full py-4 lg:py-2 h-full  lg:px-4 lg:h-[50px]">
                                     <div className="title font-bold text-white text-center lg:font-medium lg:text-[10px] whitespace-nowrap">Revenue Gained</div>
-                                    <div className="title font-bold text-white text-center lg:font-medium lg:text-xs">Rs.{revenuegained}</div>
+                                    <div className="title font-bold text-white text-center lg:font-medium lg:text-xs">Rs.{revenue.gained}</div>
                                 </div>
                                 <div className="revenuelost flex flex-col justify-center items-center bg-red-500 rounded w-full py-4  lg:py-2 h-full lg:px-4 lg:h-[50px]">
                                     <div className="title font-bold text-white text-center lg:font-medium lg:text-[10px] whitespace-nowrap">Revenue Lost</div>
-                                    <div className="title font-bold text-white text-center lg:font-medium lg:text-xs">Rs.{revenuelost}</div>
+                                    <div className="title font-bold text-white text-center lg:font-medium lg:text-xs">Rs.{revenue.lost}</div>
                                 </div>
                             </div>
                             <button
@@ -954,7 +970,6 @@ const DashboardADPage = () => {
                             Next
                         </button>
                     </div>
-
                 </div>
                 :
                 <p className="text-white text-2xl text-center">Please select a teamleader and franchise to view their dashboard</p>

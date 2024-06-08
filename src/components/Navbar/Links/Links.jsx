@@ -159,7 +159,7 @@ const Links = () => {
             </button>
 
             {/* MOBILE NAVBAR HERE- */}
-            <div className="mobile-nav hidden lg:block fixed right-0 top-0 bottom-0">
+            <div className="mobile-nav hidden lg:block fixed right-0 top-0 bottom-0 z-50">
                 {open && status !== "loading" && (
 
                     <div className="mobileLinks flex flex-col justify-start gap-4 absolute right-0 items-start top-0 bg-purple h-screen w-[250px] overflow-y-hidden lg:gap-0">

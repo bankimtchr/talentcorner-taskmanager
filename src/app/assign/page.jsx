@@ -25,6 +25,9 @@ const AssignPage = () => {
             router.push("/login")
         }
         else {
+            if (status !== "loading" && session?.user?.role !== "tl") {
+                router.back();
+            }
             setLoading(false);
         }
     }, [session, status, router]);
@@ -212,6 +215,7 @@ const AssignPage = () => {
             companyId: id,
             franchisename: selectedValue,
             franchise: franchiseId,
+            status: "in progress",
         };
 
         // console.log("companyId:", companyId);

@@ -17,6 +17,9 @@ const DashboardSHPage = () => {
             router.push("/login")
         }
         else {
+            if (status !== "loading" && session?.user?.role !== "sh") {
+                router.back();
+            }
             setLoading(false);
         }
     }, [session, status, router]);
@@ -90,6 +93,11 @@ const DashboardSHPage = () => {
         setCurrentPage(id);
     }
 
+    const splitText = (text, length) => {
+        const regex = new RegExp(`(.{1,${length}})(,|$)`, 'g');
+        return text.match(regex);
+    };
+
     return (
 
         <>
@@ -113,21 +121,23 @@ const DashboardSHPage = () => {
                         <div className="w-full">
 
                             {records.map((d) => (
-                                <div key={d._id} className="w-full">
+                                <div key={d._id} className="w-full flex">
 
-                                    <div className="w-1/6 py-2 text-center whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">{d.teamleadername}</div>
-
-
-                                    <div className="w-1/6 py-2 text-center whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">{d.username}</div>
+                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px] ">{d.teamleadername}</div>
 
 
-                                    <div className="w-1/6 py-2 text-center whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]" >{d.level}</div>
+                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px] lg:py-1 h-auto border-gray-400 border-y-[1px]">{d.username}</div>
 
-                                    <div className="w-1/6 py-2 text-center whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]" >{d.preference}</div>
 
-                                    <div className="w-1/6 py-2 text-center text-green-500 whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesAccepted.length}</div>
+                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px]" >{d.level}</div>
 
-                                    <div className="w-1/6 py-2 text-center text-red-500 whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesRejected.length}</div>
+                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{splitText(d.preference, 20).map((line, index) => (
+                                        <span key={index} className="block">{line}</span>
+                                    ))}</div>
+
+                                    <div className="w-1/6 py-2 text-center text-green-500 flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesAccepted.length}</div>
+
+                                    <div className="w-1/6 py-2 text-center text-red-500 flex-grow lg:min-w-[200px] h-auto lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesRejected.length}</div>
 
                                 </div>
                             ))}
@@ -137,7 +147,7 @@ const DashboardSHPage = () => {
 
                     <nav >
                         <ul className="pagination flex mt-4 flex-wrap">
-                            <li className="page-item border-y-[1px] border-black py-1 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
+                            <li className="page-item border-y-[1px] border-black py-2 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
                                 <a href="#" className="page-link" >Prev</a>
                             </li>
                             <div className="flex flex-wrap">
@@ -151,7 +161,7 @@ const DashboardSHPage = () => {
                                     ))
                                 }
                             </div>
-                            <li className="page-item border-y-[1px] border-black py-1 px-2 flex items-center bg-white cursor-pointer" onClick={nextPage}>
+                            <li className="page-item border-y-[1px] border-black py-2 px-2 flex items-center bg-white cursor-pointer" onClick={nextPage}>
                                 <a href="#" className="page-link"  >Next</a>
                             </li>
                         </ul>

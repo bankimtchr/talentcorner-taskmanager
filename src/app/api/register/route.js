@@ -15,8 +15,8 @@ export async function POST(req) {
     try {
         await connectToDB();
 
-        const {username, email, password, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking, companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet, deployedlink, revenueapi,preference,reminders } = await req.json();
-        // console.log("new employee:", {username, password, email, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking ,companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet,deployedlink, revenueapi, preference,reminders});
+        const {username, email, password, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking, companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet, deployedlink, revenueapi,preference,reminders, status} = await req.json();
+        console.log("new employee:", {username, password, email, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking ,companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet,deployedlink, revenueapi, preference,reminders, status});
 
         const existsWithUsername = await User.findOne({username});
         const existsWithEmail = await User.findOne({email})
@@ -39,9 +39,9 @@ export async function POST(req) {
             companiesRejected, 
             companiesWorking,
             companiesCompletedName, companiesRejectedName, companiesWorkingName,
-            spreadsheet, deployedlink, revenueapi, preference,reminders
+            spreadsheet, deployedlink, revenueapi, preference,reminders, status
         });
-        // console.log("user added in db:",user);
+        console.log("user added in db:",user);
 
         const allusers = await User.find({}, {password: 0});
         // console.log("all users:",allusers.length);
@@ -51,7 +51,7 @@ export async function POST(req) {
         return NextResponse.json({message:"User registered successfully", allusers}, {status: 201});
     }
     catch(err) {
-        // console.log("Error while registering user in route.js", err);
+        console.log("Error while registering user in route.js", err);
         return NextResponse.json({message: "Error in registered user in route.js"}, {status: 501});
     }
 }
@@ -62,8 +62,8 @@ export async function PUT(req) {
     try {
         await connectToDB();
 
-        const {username, email, password, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking, companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet, deployedlink, revenueapi,preference } = await req.json();
-        // console.log("employee to be updated:", {username, password, email, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking ,companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet,deployedlink, revenueapi, preference });
+        const {username, email, password, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking, companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet, deployedlink, revenueapi,preference, status } = await req.json();
+        // console.log("employee to be updated:", {username, password, email, role, level, teamleadername, companiesCompleted, companiesRejected, companiesWorking ,companiesCompletedName, companiesRejectedName, companiesWorkingName, spreadsheet,deployedlink, revenueapi, preference,status });
 
         const exists = await User.findOne({username});
         if(!exists) {
@@ -93,6 +93,7 @@ export async function PUT(req) {
                         companiesRejectedName, 
                         companiesWorkingName, 
                         revenueapi, 
+                        status,
                     },
                 }
             );
@@ -127,6 +128,7 @@ export async function PUT(req) {
                         companiesRejectedName, 
                         companiesWorkingName, 
                         revenueapi, 
+                        status
                     },
                 }
             );

@@ -27,6 +27,9 @@ const DashboardFRPage = () => {
             router.push("/login")
         }
         else {
+            if (status !== "loading" && session?.user?.role !== "fr") {
+                router.back();
+            }
             setLoading(false);
         }
     }, [session, status, router]);
@@ -242,7 +245,7 @@ const DashboardFRPage = () => {
         const updatedFields = {
 
             companyId: id,
-            status: "reallocated",
+            status: "reallocate",
             franchise: null,
             franchisename: "unassigned",
             reallocatedFranchise: session?.user?.id,
@@ -288,6 +291,7 @@ const DashboardFRPage = () => {
         setLoading(false);
     }
 
+    //pagination 1
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 10;
 
@@ -308,6 +312,30 @@ const DashboardFRPage = () => {
     const handlePrevPage = () => {
         setCurrentPage((prev) => Math.max(prev - 1, 1));
     };
+
+
+
+    //pagination 2
+    const [currentPage2, setCurrentPage2] = useState(1);
+    const rowsPerPage2 = 15;
+
+    const totalRows = Math.max(
+        myData?.companiesAccepted?.length || 0,
+        myData?.companiesRejected?.length || 0,
+        myData?.companiesReallocated?.length || 0
+    );
+
+    const totalPages2 = Math.ceil(totalRows / rowsPerPage2);
+
+    const handleChangePage = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages2) {
+            setCurrentPage2(newPage);
+        }
+    };
+
+    const startIdx = (currentPage2 - 1) * rowsPerPage2;
+    const endIdx = startIdx + rowsPerPage2;
+
 
     return (
         <>
@@ -380,8 +408,8 @@ const DashboardFRPage = () => {
                                         {data &&
 
                                             data?.map((d) => (
-                                                <div key={d._id} className="w-full flex">
-                                                    <div className="w-1/2  whitespace-nowrap  text-center inline-block  border-gray-400 border-y-[1px] py-2 lg:py-1">{d.companyname}</div>
+                                                <div key={d._id} className="w-full flex lg:text-[12px]">
+                                                    <div className="w-1/2   text-center  border-gray-400 border-y-[1px] py-2 lg:py-1">{d.companyname}</div>
                                                     {d.status === "in progress" &&
                                                         <div className="buttons flex items-center w-1/2 whitespace-nowrap text-center border-gray-400 border-y-[1px] py-2 lg:py-1">
 
@@ -398,11 +426,11 @@ const DashboardFRPage = () => {
                                                                 <>
                                                                     <button onClick={() => handleInterested(d._id, d.companyname)} className="w-1/2 flex items-center justify-center bg-green-500 rounded-xl text-white mx-2">
                                                                         <MdDone size={20} color="white" className="rounded-full bg-green-500" />
-                                                                        Interested
+                                                                        Accept
                                                                     </button>
                                                                     <button onClick={() => handleNotInterested(d._id, d.companyname)} className="w-1/2 flex items-center justify-center bg-red-500 rounded-xl text-white mx-2">
                                                                         <IoMdClose size={20} color="white" className="rounded-full bg-red-500" />
-                                                                        Not Interested
+                                                                        Reject
                                                                     </button>
                                                                 </>
                                                             )}
@@ -416,7 +444,7 @@ const DashboardFRPage = () => {
                             </>
                         )}
 
-
+                    {/* table 1 */}
                     {mycompanies?.length === 0 ? <h1 className="text-pink-300 text-3xl lg:text-xl mt-9 text-center">No companies accepted/working</h1> :
                         (
                             <>
@@ -433,7 +461,7 @@ const DashboardFRPage = () => {
                                         {mycompanies &&
 
                                             mycompanies?.map((company) => (
-                                                <div key={company._id} className="w-full flex">
+                                                <div key={company._id} className="w-full flex lg:text-[12px]">
                                                     <div className="w-1/2 whitespace-nowrap  text-center inline-block  border-gray-400 border-y-[1px] py-2 lg:py-1">{company.companyname}</div>
                                                     <div className="w-1/2  whitespace-nowrap flex justify-center border-gray-400 border-y-[1px] py-2 lg:py-1">
                                                         <button onClick={() => handleReallocate(company._id, company.companyname)} className=" flex items-center justify-center bg-red-500 text-white rounded-xl px-2">
@@ -453,6 +481,66 @@ const DashboardFRPage = () => {
                                     <button onClick={handlePrevPage} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 rounded">Prev</button>
                                     <span className="px-4 py-2 bg-gray-200 rounded">Page {currentPage} of {totalPages}</span>
                                     <button onClick={handleNextPage} disabled={currentPage === totalPages} className="px-4 py-2 bg-gray-200 rounded">Next</button>
+                                </div>
+                            </>
+                        )}
+
+                    {/* table 2 */}
+                    {myData?.length === 0 ? <h1 className="text-pink-300 text-3xl lg:text-xl mt-9 text-center">No History</h1> :
+                        (
+                            <>
+                                <h1 className="text-pink-300 text-3xl lg:text-xl mt-8">My History</h1>
+                                <div className="Table w-full h-full flex flex-col justify-center items-center whitespace-nowrap lg:overflow-x-auto bg-white border-gray-400 border-[1px] lg:text-[10px]">
+                                    <div className="w-full">
+                                        <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center font-bold whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1 ">
+                                            Companies Accepted/Working
+                                        </div>
+                                        <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center font-bold whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1 ">
+                                            Companies Rejected
+                                        </div>
+                                        <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center font-bold whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1 ">
+                                            Companies Reallocated
+                                        </div>
+                                    </div>
+
+                                    <div className="w-full gap-0">
+                                        {Array.from({ length: rowsPerPage2 }).map((_, index) => {
+                                            const rowIdx = startIdx + index;
+                                            return (
+                                                <div key={rowIdx} className="w-full flex">
+                                                    <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
+                                                        {myData?.companiesAcceptedName?.[rowIdx] || '-'}
+                                                    </div>
+                                                    <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
+                                                        {myData?.companiesRejectedName?.[rowIdx] || '-'}
+                                                    </div>
+                                                    <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
+                                                        {myData?.companiesReallocatedName?.[rowIdx] || '-'}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                </div>
+                                <div className="flex justify-center mt-4 gap-2" >
+                                    <button
+                                        className="px-3 py-1 border rounded-lg border-gray-400 bg-gray-200 hover:bg-gray-300"
+                                        onClick={() => handleChangePage(currentPage2 - 1)}
+                                        disabled={currentPage2 === 1}
+                                    >
+                                        Prev
+                                    </button>
+                                    <div className="px-3 py-1 rounded-lg border-t border-b border-gray-400 bg-gray-200">
+                                        Page {currentPage2} of {totalPages2}
+                                    </div>
+                                    <button
+                                        className="px-3 py-1 border rounded-lg border-gray-400 bg-gray-200 hover:bg-gray-300"
+                                        onClick={() => handleChangePage(currentPage2 + 1)}
+                                        disabled={currentPage2 === totalPages2}
+                                    >
+                                        Next
+                                    </button>
                                 </div>
                             </>
                         )}

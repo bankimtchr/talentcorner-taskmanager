@@ -46,7 +46,7 @@ const ADForm = ({ method, userdetails, setSelectedRole, session, setSelectedAD, 
         deployedlink: userdetails.deployedlink,
         revenueapi: userdetails.revenueapi,
         reminders: userdetails.reminders || 0,
-
+        status: userdetails.status || "active",
     });
 
     const [newpassword, setNewPassword] = useState("");

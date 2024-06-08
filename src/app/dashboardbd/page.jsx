@@ -21,7 +21,10 @@ const DashboardBD = () => {
         if (status !== "loading" && !session) {
             router.push("/login")
         }
-        else if (status !== "loading") {
+        else {
+            if (status !== "loading" && session?.user?.role !== "bd") {
+                router.back();
+            }
             setLoading(false);
         }
     }, [session, status, router]);
@@ -250,7 +253,7 @@ const DashboardBD = () => {
 
                     <nav >
                         <ul className="pagination flex my-4 flex-wrap">
-                            <li className="page-item border-y-[1px] border-black py-1 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
+                            <li className="page-item border-y-[1px] border-black py-2 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
                                 <a href="#" className="page-link" >Prev</a>
                             </li>
                             <div className="flex flex-wrap">
@@ -264,7 +267,7 @@ const DashboardBD = () => {
                                     ))
                                 }
                             </div>
-                            <li className="page-item border-y-[1px] border-black py-1 px-2 flex items-center bg-white cursor-pointer" onClick={nextPage}>
+                            <li className="page-item border-y-[1px] border-black py-2 px-2 flex items-center bg-white cursor-pointer" onClick={nextPage}>
                                 <a href="#" className="page-link"  >Next</a>
                             </li>
                         </ul>

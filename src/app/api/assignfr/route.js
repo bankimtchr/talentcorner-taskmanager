@@ -29,7 +29,8 @@ export async function PUT(req) {
         {
             $set: { 
                 franchisename: updatedFields.franchisename, 
-                franchise: updatedFields.franchise 
+                franchise: updatedFields.franchise,
+                status: updatedFields.status,
             },
         }
     );
