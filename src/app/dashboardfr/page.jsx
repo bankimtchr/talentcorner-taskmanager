@@ -58,7 +58,7 @@ const DashboardFRPage = () => {
 
                 const myacceptedcompanies = companies.filter((company) => company.franchisename === session?.user?.username && company.status === "assigned");
                 // console.log("myacceptedcompanies:", myacceptedcompanies);
-                const reveresemycompanies = myacceptedcompanies.reverese();
+                const reveresemycompanies = myacceptedcompanies.reverse();
                 //my accepted companies
                 setMycompanies(reveresemycompanies);
                 setError("")
