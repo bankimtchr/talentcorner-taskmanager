@@ -109,12 +109,13 @@ const DashboardSHPage = () => {
 
                     <div className="Table w-full h-full flex flex-col items-center justify-center whitespace-nowrap lg:overflow-x-auto border-gray-400 border-y-[1px] bg-white rounded lg:text-[10px]">
                         <div className="w-full">
-                            <div className="w-1/6 py-2 text-center font-bold whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Teamleader</div>
-                            <div className="w-1/6 py-2 text-center font-bold whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Franchise</div>
-                            <div className="w-1/6 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Level</div>
-                            <div className="w-1/6 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Preference</div>
-                            <div className="w-1/6 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Companies Accepted</div>
-                            <div className="w-1/6 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Companies Rejected</div>
+                            <div className="w-1/5 py-2 text-center font-bold whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Teamleader</div>
+                            <div className="w-1/5 py-2 text-center font-bold whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Franchise</div>
+                            <div className="w-1/5 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Level</div>
+                            <div className="w-1/5 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Status</div>
+                            <div className="w-1/5 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Preference</div>
+                            {/* <div className="w-1/6 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Companies Accepted</div>
+                            <div className="w-1/6 py-2  text-center font-bold  whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">Companies Rejected</div> */}
 
                         </div>
 
@@ -123,21 +124,24 @@ const DashboardSHPage = () => {
                             {records.map((d) => (
                                 <div key={d._id} className="w-full flex">
 
-                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px] ">{d.teamleadername}</div>
+                                    <div className="w-1/5 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px] ">{d.teamleadername}</div>
 
 
-                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px] lg:py-1 h-auto border-gray-400 border-y-[1px]">{d.username}</div>
+                                    <div className="w-1/5 py-2 text-center flex-grow lg:min-w-[200px] lg:py-1 h-auto border-gray-400 border-y-[1px]">{d.username}</div>
 
 
-                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px]" >{d.level}</div>
+                                    <div className="w-1/5 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px]" >{d.level}</div>
 
-                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{splitText(d.preference, 25).map((line, index) => (
+                                    <div className="w-1/5 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px]" >{d.status}</div>
+
+
+                                    <div className="w-1/5 py-2 text-center flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{splitText(d.preference, 25).map((line, index) => (
                                         <span key={index} className="block">{line}</span>
                                     ))}</div>
 
-                                    <div className="w-1/6 py-2 text-center text-green-500 flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesAccepted.length}</div>
+                                    {/* <div className="w-1/6 py-2 text-center text-green-500 flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesAccepted.length}</div>
 
-                                    <div className="w-1/6 py-2 text-center text-red-500 flex-grow lg:min-w-[200px] h-auto lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesRejected.length}</div>
+                                    <div className="w-1/6 py-2 text-center text-red-500 flex-grow lg:min-w-[200px] h-auto lg:py-1 border-gray-400 border-y-[1px]" >{d.companiesRejected.length}</div> */}
 
                                 </div>
                             ))}

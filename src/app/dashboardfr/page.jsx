@@ -50,15 +50,17 @@ const DashboardFRPage = () => {
                 // console.log("all companies:", companies);
 
                 const myassignedcompanies = companies.filter((company) => company.franchisename === session?.user?.username && company.status === "in progress");
+                const reversemyassignedcompanies = myassignedcompanies.reverse();
 
                 // console.log("myassignedcompanies:", myassignedcompanies);
-
-                setData(myassignedcompanies);
+                //new companies
+                setData(reversemyassignedcompanies);
 
                 const myacceptedcompanies = companies.filter((company) => company.franchisename === session?.user?.username && company.status === "assigned");
                 // console.log("myacceptedcompanies:", myacceptedcompanies);
-
-                setMycompanies(myacceptedcompanies);
+                const reveresemycompanies = myacceptedcompanies.reverese();
+                //my accepted companies
+                setMycompanies(reveresemycompanies);
                 setError("")
                 // setLoading(false);
             }
