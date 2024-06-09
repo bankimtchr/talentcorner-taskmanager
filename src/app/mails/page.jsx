@@ -182,6 +182,15 @@ const MailsPage = () => {
         setCurrentPage(id);
     }
 
+    const splitText = (text, length) => {
+        const regex = new RegExp(`.{1,${length}}`, 'g');
+        return text.match(regex) || [];
+
+        // const regex = new RegExp(`(.{1,${length}})(,|$)`, 'g');
+        // return text.match(regex);
+    };
+
+
 
 
     return (
@@ -202,9 +211,11 @@ const MailsPage = () => {
 
 
                         {records.map((d) => (
-                            <div key={d._id} className="w-full">
+                            <div key={d._id} className="w-full flex">
 
-                                <div className="w-1/4 py-2 text-center whitespace-nowrap lg:min-w-[180px] inline-block lg:py-1 border-gray-400 border-y-[1px]">{d.companyname}</div>
+                                <div className="w-1/4 py-2 text-center flex-grow h-auto  lg:min-w-[180px]  lg:py-1 border-gray-400 border-y-[1px]">{splitText(d.companyname, 20).map((line, index) => (
+                                    <span key={index} className="block">{line}</span>
+                                ))}</div>
 
 
                                 <div className={d.teamleadername === "unassigned" ? "w-1/4 text-center whitespace-nowrap lg:min-w-[180px] inline-block lg:py-1 border-gray-400 border-y-[1px]" : "w-1/4 text-center py-2 whitespace-nowrap lg:min-w-[180px] inline-block lg:py-1 border-gray-400 border-y-[1px]"}>

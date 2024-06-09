@@ -94,8 +94,8 @@ const DashboardSHPage = () => {
     }
 
     const splitText = (text, length) => {
-        const regex = new RegExp(`(.{1,${length}})(,|$)`, 'g');
-        return text.match(regex);
+        const regex = new RegExp(`.{1,${length}}`, 'g');
+        return text.match(regex) || [];
     };
 
     return (
@@ -131,7 +131,7 @@ const DashboardSHPage = () => {
 
                                     <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px] h-auto  lg:py-1 border-gray-400 border-y-[1px]" >{d.level}</div>
 
-                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{splitText(d.preference, 20).map((line, index) => (
+                                    <div className="w-1/6 py-2 text-center flex-grow lg:min-w-[200px]  h-auto lg:py-1 border-gray-400 border-y-[1px]" >{splitText(d.preference, 25).map((line, index) => (
                                         <span key={index} className="block">{line}</span>
                                     ))}</div>
 

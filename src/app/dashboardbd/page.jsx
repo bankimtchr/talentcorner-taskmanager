@@ -184,6 +184,12 @@ const DashboardBD = () => {
             hour12: true,
         });
 
+
+    const splitText = (text, length) => {
+        const regex = new RegExp(`.{1,${length}}`, 'g');
+        return text.match(regex) || [];
+    };
+
     return (
         <div className="min-h-screen flex justify-start items-center flex-col w-full lg:px-2 px-24 pt-12 pb-24 lg:py-4">
 
@@ -228,9 +234,11 @@ const DashboardBD = () => {
 
 
                         {records.map((d) => (
-                            <div key={d._id} className="w-full" >
+                            <div key={d._id} className="w-full flex" >
                                 <div className="w-1/5 py-2 text-center
-                                whitespace-nowrap  lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px]">{d.companyname}</div>
+                                  lg:min-w-[200px] flex-grow h-auto lg:py-1 border-gray-400 border-y-[1px]">{splitText(d.companyname, 20).map((line, index) => (
+                                    <span key={index} className="block">{line}</span>
+                                ))}</div>
 
                                 {/* <div className="w-1/5 py-2 text-center whitespace-nowrap lg:min-w-[200px] inline-block lg:py-1 border-gray-400 border-y-[1px] hover:underline text-blue-500"><a href={d.jobdetails} target="_blank">Click here</a></div> */}
 

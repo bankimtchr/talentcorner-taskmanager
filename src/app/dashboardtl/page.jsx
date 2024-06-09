@@ -111,11 +111,11 @@ const TLDashboardPage = () => {
                 try {
                     // setLoading(true);
                     const url = session?.user?.deployedlink
-                    // console.log("deplpoyedlink:", url);
+                    console.log("deplpoyedlink:", url);
                     const response = await fetch(url);
 
                     const data = await response.json();
-                    // console.log('data: ', data);
+                    console.log('data: ', data);
 
                     const statusCount = {
                         'In Progress': 0,
@@ -126,19 +126,19 @@ const TLDashboardPage = () => {
                     // console.log("statusCount:", statusCount);
 
                     const franchiseData = data.filter((d) => d.nameoffranchisee.replace(/\s/g, '').toLowerCase() === franchiseSelected.replace(/\s/g, '').toLowerCase());
-                    // console.log("franchiseData:", franchiseData);
+                    console.log("franchiseData:", franchiseData);
 
                     const statusEntry = franchiseData[0];
-                    // console.log("statusEntry:", statusEntry);
+                    console.log("statusEntry:", statusEntry);
 
                     statusCount['In Progress'] = statusEntry.inprogress;
                     statusCount['Hold'] = statusEntry.hold;
                     statusCount['Cancel'] = statusEntry.cancel;
                     statusCount['Closed'] = statusEntry.closed;
-                    // console.log("statusCount:", statusCount);
+                    console.log("statusCount:", statusCount);
 
                     const statusData = Object.values(statusCount);
-                    // console.log("statusData:", statusData);
+                    console.log("statusData:", statusData);
 
                     setChartData({
                         datasets: [{
@@ -252,7 +252,11 @@ const TLDashboardPage = () => {
         fetchRevenue();
 
         setLoading(false);
-    }, [franchiseSelected, status]);
+    }, [franchiseSelected]);
+
+    useEffect(() => {
+        console.log("chartData:", chartData);
+    }, [chartData])
 
 
     //to get franchiseUnderMe
@@ -410,7 +414,7 @@ const TLDashboardPage = () => {
                                 <SelectValue placeholder="Select Franchise" />
                             </SelectTrigger>
                             <SelectContent className="h-[150px]">
-                                {franchiseUnderMe.reverse().map((f) => (
+                                {franchiseUnderMe.map((f) => (
                                     <SelectItem key={f._id} value={f.username} className="py-1">{f.username}</SelectItem>
                                 ))}
                             </SelectContent>
@@ -495,7 +499,7 @@ const TLDashboardPage = () => {
                         </div>
 
                         <div className="Table w-full h-full flex flex-col justify-center items-center whitespace-nowrap lg:overflow-x-auto bg-white border-gray-400 border-[1px] lg:text-[12px] ">
-                            <div className="w-full">
+                            <div className="w-full flex">
                                 <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center font-bold whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1 ">Junior</div>
                                 <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center font-bold whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1 ">Junior-Mid</div>
                                 <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center font-bold whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1 ">Mid</div>
@@ -505,17 +509,12 @@ const TLDashboardPage = () => {
 
                             <div className="w-full gap-0">
                                 {Array(Math.max(juniorFranchise.length, midFranchise.length, topFranchise.length, junior_midFranchise.length, mid_seniorFranchise.length)).fill().map((_, index) => (
-                                    <div key={index} className="w-full">
-                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  whitespace-nowrap
-                                inline-block lg:min-w-[200px] lg:py-1">{juniorFranchise[index]?.username || '-'}{juniorFranchise[index]?.status === "active" ? "(A)" : ""}</div>
-                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  whitespace-nowrap
-                                inline-block lg:min-w-[200px] lg:py-1">{junior_midFranchise[index]?.username || '-'}{junior_midFranchise[index]?.status === "active" ? "(A)" : ""}</div>
-                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  whitespace-nowrap
-                                inline-block lg:min-w-[200px] lg:py-1">{midFranchise[index]?.username || ''}{midFranchise[index]?.status === "active" ? "(A)" : ""}</div>
-                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  whitespace-nowrap
-                                inline-block lg:min-w-[200px] lg:py-1">{mid_seniorFranchise[index]?.username || '-'}{mid_seniorFranchise[index]?.status === "active" ? "(A)" : ""}</div>
-                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  whitespace-nowrap
-                                inline-block lg:min-w-[200px] lg:py-1">{topFranchise[index]?.username || '-'}{topFranchise[index]?.status === "active" ? "(A)" : ""}</div>
+                                    <div key={index} className="w-full flex">
+                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  flex-grow h-auto lg:min-w-[200px] lg:py-1">{juniorFranchise[index]?.username || '-'}{juniorFranchise[index]?.status === "active" ? "(A)" : ""}</div>
+                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  flex-grow h-auto lg:min-w-[200px] lg:py-1">{junior_midFranchise[index]?.username || '-'}{junior_midFranchise[index]?.status === "active" ? "(A)" : ""}</div>
+                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  flex-grow h-auto lg:min-w-[200px] lg:py-1">{midFranchise[index]?.username || ''}{midFranchise[index]?.status === "active" ? "(A)" : ""}</div>
+                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  flex-grow  h-auto lg:min-w-[200px] lg:py-1">{mid_seniorFranchise[index]?.username || '-'}{mid_seniorFranchise[index]?.status === "active" ? "(A)" : ""}</div>
+                                        <div className="w-1/5 py-2 border-[1px] border-gray-300 text-center  flex-grow h-auto lg:min-w-[200px] lg:py-1">{topFranchise[index]?.username || '-'}{topFranchise[index]?.status === "active" ? "(A)" : ""}</div>
                                     </div>
                                 ))}
                             </div>

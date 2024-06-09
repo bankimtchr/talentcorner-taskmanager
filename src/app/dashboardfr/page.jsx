@@ -336,6 +336,11 @@ const DashboardFRPage = () => {
     const startIdx = (currentPage2 - 1) * rowsPerPage2;
     const endIdx = startIdx + rowsPerPage2;
 
+    const splitText = (text, length) => {
+        const regex = new RegExp(`.{1,${length}}`, 'g');
+        return text.match(regex) || [];
+    };
+
 
     return (
         <>
@@ -409,26 +414,28 @@ const DashboardFRPage = () => {
 
                                             data?.map((d) => (
                                                 <div key={d._id} className="w-full flex lg:text-[12px]">
-                                                    <div className="w-1/2   text-center  border-gray-400 border-y-[1px] py-2 lg:py-1">{d.companyname}</div>
+                                                    <div className="w-1/2   text-center  flex-grow h-auto border-gray-400 border-y-[1px] py-2 lg:py-1">{splitText(d.companyname, 20).map((line, index) => (
+                                                        <span key={index} className="block">{line}</span>
+                                                    ))}</div>
                                                     {d.status === "in progress" &&
                                                         <div className="buttons flex items-center w-1/2 whitespace-nowrap text-center border-gray-400 border-y-[1px] py-2 lg:py-1">
 
                                                             {isMobile ? (
                                                                 <>
-                                                                    <button className="w-1/2 flex justify-center items-center">
+                                                                    <button className="w-1/2 flex justify-center items-center h-[20px]">
                                                                         <MdDone onClick={() => handleInterested(d._id, d.companyname)} size={20} color="white" className="rounded-full bg-green-500" />
                                                                     </button>
-                                                                    <button className="w-1/2 flex justify-center items-center">
+                                                                    <button className="w-1/2 flex justify-center items-center h-[20px]">
                                                                         <IoMdClose onClick={() => handleNotInterested(d._id, d.companyname)} size={20} color="white" className="rounded-full bg-red-500" />
                                                                     </button>
                                                                 </>
                                                             ) : (
                                                                 <>
-                                                                    <button onClick={() => handleInterested(d._id, d.companyname)} className="w-1/2 flex items-center justify-center bg-green-500 rounded-xl text-white mx-2">
+                                                                    <button onClick={() => handleInterested(d._id, d.companyname)} className="w-1/2 flex items-center justify-center bg-green-500 rounded-xl text-white mx-2 h-[20px]">
                                                                         <MdDone size={20} color="white" className="rounded-full bg-green-500" />
                                                                         Accept
                                                                     </button>
-                                                                    <button onClick={() => handleNotInterested(d._id, d.companyname)} className="w-1/2 flex items-center justify-center bg-red-500 rounded-xl text-white mx-2">
+                                                                    <button onClick={() => handleNotInterested(d._id, d.companyname)} className="w-1/2 flex items-center justify-center bg-red-500 rounded-xl text-white mx-2 h-[20px]">
                                                                         <IoMdClose size={20} color="white" className="rounded-full bg-red-500" />
                                                                         Reject
                                                                     </button>
@@ -462,9 +469,11 @@ const DashboardFRPage = () => {
 
                                             mycompanies?.map((company) => (
                                                 <div key={company._id} className="w-full flex lg:text-[12px]">
-                                                    <div className="w-1/2 whitespace-nowrap  text-center inline-block  border-gray-400 border-y-[1px] py-2 lg:py-1">{company.companyname}</div>
-                                                    <div className="w-1/2  whitespace-nowrap flex justify-center border-gray-400 border-y-[1px] py-2 lg:py-1">
-                                                        <button onClick={() => handleReallocate(company._id, company.companyname)} className=" flex items-center justify-center bg-red-500 text-white rounded-xl px-2">
+                                                    <div className="w-1/2 flex-grow h-auto   text-center  border-gray-400 border-y-[1px] py-2 lg:py-1">{splitText(company.companyname, 20).map((line, index) => (
+                                                        <span key={index} className="block">{line}</span>
+                                                    ))}</div>
+                                                    <div className="w-1/2  flex justify-center border-gray-400 border-y-[1px] py-2 lg:py-1">
+                                                        <button onClick={() => handleReallocate(company._id, company.companyname)} className=" flex items-center justify-center bg-red-500 text-white rounded-xl px-2 h-[20px]">
                                                             Reallocate
                                                         </button>
                                                     </div>
@@ -509,13 +518,22 @@ const DashboardFRPage = () => {
                                             return (
                                                 <div key={rowIdx} className="w-full flex">
                                                     <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
-                                                        {myData?.companiesAcceptedName?.[rowIdx] || '-'}
+                                                        {/* {myData?.companiesAcceptedName?.[rowIdx] || '-'} */}
+                                                        {splitText(myData?.companiesAcceptedName?.[rowIdx] || '-', 30).map((line, index) => (
+                                                            <span key={index} className="block">{line}</span>
+                                                        ))}
                                                     </div>
                                                     <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
-                                                        {myData?.companiesRejectedName?.[rowIdx] || '-'}
+                                                        {/* {myData?.companiesRejectedName?.[rowIdx] || '-'} */}
+                                                        {splitText(myData?.companiesRejectedName?.[rowIdx] || '-', 30).map((line, index) => (
+                                                            <span key={index} className="block">{line}</span>
+                                                        ))}
                                                     </div>
                                                     <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
-                                                        {myData?.companiesReallocatedName?.[rowIdx] || '-'}
+                                                        {/* {myData?.companiesReallocatedName?.[rowIdx] || '-'} */}
+                                                        {splitText(myData?.companiesReallocatedName?.[rowIdx] || '-', 30).map((line, index) => (
+                                                            <span key={index} className="block">{line}</span>
+                                                        ))}
                                                     </div>
                                                 </div>
                                             );
@@ -535,7 +553,7 @@ const DashboardFRPage = () => {
                                         Page {currentPage2} of {totalPages2}
                                     </div>
                                     <button
-                                        className="px-3 py-1 border rounded-lg border-gray-400 bg-gray-200 hover:bg-gray-300"
+                                        className="px-3 py-2 border rounded-lg border-gray-400 bg-gray-200 hover:bg-gray-300"
                                         onClick={() => handleChangePage(currentPage2 + 1)}
                                         disabled={currentPage2 === totalPages2}
                                     >

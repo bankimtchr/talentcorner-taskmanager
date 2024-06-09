@@ -250,6 +250,11 @@ const AssignPage = () => {
         }
     }
 
+    const splitText = (text, length) => {
+        const regex = new RegExp(`.{1,${length}}`, 'g');
+        return text.match(regex) || [];
+    };
+
 
 
     return (
@@ -274,13 +279,15 @@ const AssignPage = () => {
                             {
                                 records.map((d) => (
 
-                                    <div key={d._id} className="w-full">
+                                    <div key={d._id} className="w-full flex">
 
-                                        <div className="w-1/6 py-2 border-y-[1px] border-gray-400 text-center  whitespace-nowrap
-                                inline-block lg:w-[200px]">{d.companyname}</div>
+                                        <div className="w-1/6 py-2 border-y-[1px] border-gray-400 text-center  
+                                flex-grow h-auto lg:min-w-[200px]">{splitText(d.companyname, 20).map((line, index) => (
+                                            <span key={index} className="block">{line}</span>
+                                        ))}</div>
 
                                         {d.franchisename === "unassigned" ? (
-                                            <div className="w-1/6  text-center  whitespace-nowrap inline-block lg:w-[200px]  border-gray-400">
+                                            <div className="w-1/6  text-center  flex-grow h-auto  lg:min-w-[200px]  border-gray-400">
 
                                                 <Select
                                                     onValueChange={(selectedValue) => handleSelectChange(selectedValue, d._id)}
@@ -302,24 +309,24 @@ const AssignPage = () => {
                                             </div>
                                         ) : (
 
-                                            <div className="w-1/6 items-center  py-2  border-y-[1px] border-gray-400 text-center  whitespace-nowrap inline-block lg:w-[200px]">{d.franchisename}</div>
+                                            <div className="w-1/6 items-center  py-2  border-y-[1px] border-gray-400 text-center  flex-grow h-auto  lg:min-w-[200px]">{d.franchisename}</div>
                                         )}
 
-                                        <div className={d.status === "assigned" ? "w-1/6 items-center border-y-[1px] border-gray-400 py-2 text-center text-green-500  whitespace-nowrap inline-block lg:w-[200px]" : "w-1/6 items-center border-y-[1px] border-gray-400 py-2 text-center  whitespace-nowrap inline-block lg:w-[200px]"}>{d.status}</div>
+                                        <div className={d.status === "assigned" ? "w-1/6 items-center border-y-[1px] border-gray-400 py-2 text-center text-green-500  flex-grow h-auto  lg:min-w-[200px]" : "w-1/6 items-center border-y-[1px] border-gray-400 py-2 text-center  flex-grow h-auto  lg:min-w-[200px]"}>{d.status}</div>
 
-                                        <div className="w-1/6  items-center border-y-[1px] border-gray-400 py-2 text-center text-red-500 whitespace-nowrap inline-block lg:w-[200px]">
+                                        <div className="w-1/6  items-center border-y-[1px] border-gray-400 py-2 text-center text-red-500 flex-grow h-auto  lg:min-w-[200px]">
                                             {d.rejectedFranchiseName.length === 0 ? 0 :
                                                 d.rejectedFranchiseName.length
                                             }
                                         </div>
 
-                                        <div className="w-1/6  items-center border-y-[1px] border-gray-400 py-2 text-center text-red-500 whitespace-nowrap inline-block lg:w-[200px]">
+                                        <div className="w-1/6  items-center border-y-[1px] border-gray-400 py-2 text-center text-red-500 flex-grow h-auto  lg:min-w-[200px]">
                                             {d.reallocatedFranchise.length === 0 ? 0 :
                                                 d.reallocatedFranchise.length
                                             }
                                         </div>
 
-                                        <div className="w-1/6 h-auto  border-y-[1px] border-gray-400 text-center inline-block whitespace-nowrap py-2 lg:w-[200px]">
+                                        <div className="w-1/6   border-y-[1px] border-gray-400 text-center flex-grow h-auto  py-2 lg:min-w-[200px]">
                                             <button className="bg-red-600  rounded-full px-4  text-white hover:text-blac hover:border-2 hover:border-red-600 hover:bg-white hover:text-red-600" onClick={() => handleCompanyReject(d._id, d.companyname)}>Reject</button>
                                         </div>
                                     </div>
@@ -330,7 +337,7 @@ const AssignPage = () => {
 
                     <nav >
                         <ul className="pagination flex my-4 flex-wrap">
-                            <li className="page-item border-y-[1px] border-black py-1 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
+                            <li className="page-item border-y-[1px] border-black py-2 px-2 flex items-center bg-white cursor-pointer" onClick={prePage}>
                                 <a href="#" className="page-link" >Prev</a>
                             </li>
                             <div className="flex flex-wrap">
@@ -344,7 +351,7 @@ const AssignPage = () => {
                                     ))
                                 }
                             </div>
-                            <li className="page-item border-y-[1px] border-black py-1 px-2 flex items-center bg-white cursor-pointer" onClick={nextPage}>
+                            <li className="page-item border-y-[1px] border-black py-2 px-2 flex items-center bg-white cursor-pointer" onClick={nextPage}>
                                 <a href="#" className="page-link"  >Next</a>
                             </li>
                         </ul>
