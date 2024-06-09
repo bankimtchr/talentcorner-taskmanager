@@ -298,7 +298,7 @@ const AssignPage = () => {
                                                     </SelectTrigger>
                                                     <SelectContent className="h-[150px] border-none  outline-none">
 
-                                                        {franchiseUnderMe.reverse().map((f) =>
+                                                        {franchiseUnderMe.filter((f) => !d.rejectedFranchiseName.find(item => item === f.username)).filter((f) => !d.reallocatedFranchiseName.find(item => item === f.username)).map((f) =>
                                                         (
                                                             <SelectItem key={f._id} value={f.username} className="py-1">{f.username}</SelectItem>
                                                         )

@@ -807,7 +807,7 @@ const DashboardADPage = () => {
                 {session?.user?.username &&
 
                     <div className="flex justify-center items-center gap-4 lg:w-full">
-                        <button className="py-0 px-8 rounded bg-red-500 hover:bg-red-300 gap-4 text-white whitespace-nowrap flex items-center h-[40px] cursor pointer lg:w-1/2" onClick={handleAlertAll}>
+                        <button className="py-0 px-8 rounded bg-red-500 hover:bg-red-300 gap-4 text-white whitespace-nowrap flex justify-center items-center h-[40px] cursor pointer lg:w-1/2" onClick={handleAlertAll}>
                             Alert all
                         </button>
 
@@ -827,43 +827,45 @@ const DashboardADPage = () => {
 
                     <div className="w-full flex justify-center items-center bg-white rounded p-4 lg:flex-col lg:p-2 gap-4 lg:text-[10px]">
                         <div className="userdetailstext flex flex-col justify-between  items-start w-3/5 lg:w-full bg-white rounded px-4 py-2 lg:p-0">
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Username</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.username || "select a franchise"}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Email</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.email || "select a franchise"}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Team Leader</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.teamleadername || "loading..."}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Spreadsheet</label>
-                                <a href={franchise?.spreadsheet} target="_blank" className="text-blue-500 hover:underline cursor-pointer w-3/5">Click here</a>
+                                <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">
+                                    <a href={franchise?.spreadsheet} target="_blank" className="text-blue-500 hover:underline cursor-pointer w-3/5">Click here</a>
+                                </div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Companies Accepted</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.companiesAccepted?.length === 0 ? 0 : franchise?.companiesAccepted?.length}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Companies Rejected</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.companiesRejected?.length === 0 ? 0 : franchise?.companiesRejected?.length}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Companies Reallocated</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.companiesReallocated?.length === 0 ? 0 : franchise?.companiesReallocated?.length}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Reminders</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.reminders || 0}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Preference</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.preference || "any"}</div>
                             </div>
-                            <div className="row flex justiy-start items-center w-full gap-4">
+                            <div className="row flex justify-start items-start w-full gap-4">
                                 <label className="w-2/5 py-2 font-bold lg:py-0 lg:font-medium">Status</label>
                                 <div className="w-3/5 py-2 lg:py-0 lg:font-normal overflow-x-auto text-gray-500">{franchise?.status || "active"}</div>
                             </div>
@@ -937,13 +939,13 @@ const DashboardADPage = () => {
                                 return (
                                     <div key={rowIdx} className="w-full flex">
                                         <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
-                                            {franchise?.companiesAcceptedName?.[rowIdx] || '-'}
+                                            {franchise?.companiesAcceptedName?.slice().reverse()[rowIdx] || '-'}
                                         </div>
                                         <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
-                                            {franchise?.companiesRejectedName?.[rowIdx] || '-'}
+                                            {franchise?.companiesRejectedName?.slice().reverse()[rowIdx] || '-'}
                                         </div>
                                         <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
-                                            {franchise?.companiesReallocatedName?.[rowIdx] || '-'}
+                                            {franchise?.companiesReallocatedName?.slice().reverse()[rowIdx] || '-'}
                                         </div>
                                     </div>
                                 );

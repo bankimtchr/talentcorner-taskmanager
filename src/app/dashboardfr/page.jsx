@@ -397,7 +397,7 @@ const DashboardFRPage = () => {
                     </div>
 
 
-                    {data?.length === 0 ? <h1 className="text-pink-300 text-3xl lg:text-xl mt-9 text-center">No companies assigned</h1> :
+                    {data?.length === 0 ? <h1 className="text-pink-300 text-3xl lg:text-xl mt-9 text-center">No New companies</h1> :
                         (
                             <>
 
@@ -452,7 +452,7 @@ const DashboardFRPage = () => {
                         )}
 
                     {/* table 1 */}
-                    {mycompanies?.length === 0 ? <h1 className="text-pink-300 text-3xl lg:text-xl mt-9 text-center">No companies accepted/working</h1> :
+                    {mycompanies?.length === 0 ? <h1 className="text-pink-300 text-3xl lg:text-xl mt-9 text-center">No companies accepted</h1> :
                         (
                             <>
                                 <h1 className="text-pink-300 text-3xl lg:text-xl mt-8">My assigned companies</h1>
@@ -487,9 +487,9 @@ const DashboardFRPage = () => {
 
 
                                 <div className="w-full flex justify-center gap-2 mb-4 lg:text-[12px]">
-                                    <button onClick={handlePrevPage} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 rounded">Prev</button>
-                                    <span className="px-4 py-2 bg-gray-200 rounded">Page {currentPage} of {totalPages}</span>
-                                    <button onClick={handleNextPage} disabled={currentPage === totalPages} className="px-4 py-2 bg-gray-200 rounded">Next</button>
+                                    <button onClick={handlePrevPage} disabled={currentPage === 1} className="px-4 py-1 bg-gray-200 rounded">Prev</button>
+                                    <span className="px-4 py-1 bg-gray-200 rounded">Page {currentPage} of {totalPages}</span>
+                                    <button onClick={handleNextPage} disabled={currentPage === totalPages} className="px-4 py-1 bg-gray-200 rounded">Next</button>
                                 </div>
                             </>
                         )}
@@ -519,19 +519,19 @@ const DashboardFRPage = () => {
                                                 <div key={rowIdx} className="w-full flex">
                                                     <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
                                                         {/* {myData?.companiesAcceptedName?.[rowIdx] || '-'} */}
-                                                        {splitText(myData?.companiesAcceptedName?.[rowIdx] || '-', 30).map((line, index) => (
+                                                        {splitText(myData?.companiesAcceptedName?.slice().reverse()[rowIdx] || '-', 30).map((line, index) => (
                                                             <span key={index} className="block">{line}</span>
                                                         ))}
                                                     </div>
                                                     <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
                                                         {/* {myData?.companiesRejectedName?.[rowIdx] || '-'} */}
-                                                        {splitText(myData?.companiesRejectedName?.[rowIdx] || '-', 30).map((line, index) => (
+                                                        {splitText(myData?.companiesRejectedName?.slice().reverse()[rowIdx] || '-', 30).map((line, index) => (
                                                             <span key={index} className="block">{line}</span>
                                                         ))}
                                                     </div>
                                                     <div className="w-1/3 py-2 border-[1px] border-gray-300 text-center whitespace-nowrap inline-block lg:min-w-[200px] lg:py-1">
                                                         {/* {myData?.companiesReallocatedName?.[rowIdx] || '-'} */}
-                                                        {splitText(myData?.companiesReallocatedName?.[rowIdx] || '-', 30).map((line, index) => (
+                                                        {splitText(myData?.companiesReallocatedName?.slice().reverse()[rowIdx] || '-', 30).map((line, index) => (
                                                             <span key={index} className="block">{line}</span>
                                                         ))}
                                                     </div>
@@ -543,17 +543,17 @@ const DashboardFRPage = () => {
                                 </div>
                                 <div className="flex justify-center mt-4 gap-2" >
                                     <button
-                                        className="px-3 py-1 border rounded-lg border-gray-400 bg-gray-200 hover:bg-gray-300"
+                                        className="px-3 py-1 border rounded border-gray-400 bg-gray-200 hover:bg-gray-300"
                                         onClick={() => handleChangePage(currentPage2 - 1)}
                                         disabled={currentPage2 === 1}
                                     >
                                         Prev
                                     </button>
-                                    <div className="px-3 py-1 rounded-lg border-t border-b border-gray-400 bg-gray-200">
+                                    <div className="px-3 py-1 rounded border-t border-b border-gray-400 bg-gray-200">
                                         Page {currentPage2} of {totalPages2}
                                     </div>
                                     <button
-                                        className="px-3 py-2 border rounded-lg border-gray-400 bg-gray-200 hover:bg-gray-300"
+                                        className="px-3 py-1 border rounded border-gray-400 bg-gray-200 hover:bg-gray-300"
                                         onClick={() => handleChangePage(currentPage2 + 1)}
                                         disabled={currentPage2 === totalPages2}
                                     >
