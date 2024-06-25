@@ -681,7 +681,7 @@ const DashboardADPage = () => {
         const allfranchisee = users?.filter((user) => user?.role === "fr" && user?.status === "active");
 
         const emails = allfranchisee?.map(user => user?.email);
-        // console.log(emails);
+        console.log(emails);
 
         if (!emails || emails.length === 0) {
             setLoading(false);

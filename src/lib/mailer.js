@@ -112,7 +112,7 @@ export const sendEmail = async (emails,spreadsheet) => {
 
 export const sendEmailAll = async (emails) => {
     try {
-        // console.log("emails in sendEmail fn:", emails); 
+        console.log("emails in sendEmail fn:", emails); 
     //     const emailContent = `
     //   <html>
     //     <head>
