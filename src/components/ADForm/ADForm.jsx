@@ -139,6 +139,7 @@ const ADForm = ({ method, userdetails, setSelectedRole, session, setSelectedAD, 
 
         //method is post 
         if (method !== "put") {
+            info.status = "inactive";
             //check all fields
             if (!username || !email || !password || !deployedlink) {
                 setError("Must provide all credentials");

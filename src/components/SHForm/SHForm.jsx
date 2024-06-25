@@ -142,6 +142,8 @@ const SHForm = ({ method, userdetails, setSelectedRole, setSelectedSH, users, se
                 //all credentials , then post 
                 try {
                     setPending(true);
+                    info.status = "inactive";
+
 
                     const url = "/api/register";
                     const res = await axios({

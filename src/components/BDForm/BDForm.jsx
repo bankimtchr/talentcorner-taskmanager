@@ -142,6 +142,7 @@ const BDForm = ({ method, userdetails, setSelectedRole, setSelectedBD, users, se
                 //all credentials , then post 
                 try {
                     setPending(true);
+                    info.status = "inactive";
 
                     const url = "/api/register";
                     const res = await axios({
