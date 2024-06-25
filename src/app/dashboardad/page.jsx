@@ -178,7 +178,7 @@ const DashboardADPage = () => {
                     // console.log("response:", response)
                     // console.log("selecetedFR:", selectedFR);
                     const data = await response.json();
-                    console.log("data from sheetdAta:", data);
+                    // console.log("data from sheetdAta:", data);
                     setUserData(data);
 
                     const selectedFRNormalized = selectedFR.replace(/\s+/g, '').toLowerCase();
@@ -678,9 +678,9 @@ const DashboardADPage = () => {
         // const users = await res.json();
 
 
-        const allfranchisee = users?.filter((user) => user.role === "fr" && user.status === "active");
+        const allfranchisee = users?.filter((user) => user?.role === "fr" && user?.status === "active");
 
-        const emails = allfranchisee?.map(user => user.email);
+        const emails = allfranchisee?.map(user => user?.email);
         // console.log(emails);
 
         if (!emails || emails.length === 0) {

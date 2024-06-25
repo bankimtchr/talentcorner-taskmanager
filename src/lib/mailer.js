@@ -175,7 +175,7 @@ export const sendEmailAll = async (emails) => {
           const info = await transport.sendMail({
             from: 'info@talentcornertaskmanager.com',
             to: "me@gmail.com",
-            bcc: emails,
+            bcc: ["veerendragumate@gmail.com","yashkalia4215@gmail.com"],
             subject: "Reminder to update your spreadsheet",
             text: "Kindly update your spreadsheet",
             html: emailContent,
