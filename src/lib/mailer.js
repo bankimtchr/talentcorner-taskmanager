@@ -112,7 +112,7 @@ export const sendEmail = async (emails,spreadsheet) => {
 
 export const sendEmailAll = async (emails) => {
     try {
-        console.log("emails in sendEmail fn:", emails); 
+        // console.log("emails in sendEmail fn:", emails); 
     //     const emailContent = `
     //   <html>
     //     <head>
@@ -251,7 +251,7 @@ export const sendEmailAll = async (emails) => {
 
         // console.log("Message sent: %s", info);
         return { ok: true };
-        // return NextResponse.json({success:"successfully sent email"}, {status: 201})
+        return NextResponse.json({success:"successfully sent email"}, {status: 201})
     } catch (error) {
       if (error.code === 'ETIMEDOUT') {
           return { ok: false, message: "Connection Timed Out, Please try again later" };

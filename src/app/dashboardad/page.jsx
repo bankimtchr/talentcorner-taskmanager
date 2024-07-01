@@ -676,19 +676,31 @@ const DashboardADPage = () => {
         setLoading(true);
         // const res = await fetch("/api/user", { cache: "no-store" });
         // const users = await res.json();
+        // console.log("clicked")
 
 
+
+
+        // const activeFrs = users?.filter((u) => u?.status === "active");
+        // console.log("activeFrs:", activeFrs);
+
+        // const allfranchisee = activeFrs?.filter((user) => user?.role === "fr");
+        // console.log("allfranchisee:", allfranchisee);
+
+
+        // const emails = allfranchisee?.map(user => user?.email);
+        // console.log(emails);
 
 
         const activeFrs = users?.filter((u) => u?.status === "active");
-        console.log("activeFrs:", activeFrs);
+        // console.log("activeFrs:", activeFrs);
 
         const allfranchisee = activeFrs?.filter((user) => user?.role === "fr");
-        console.log("allfranchisee:", allfranchisee);
+        // console.log("allfranchisee:", allfranchisee);
 
 
         const emails = allfranchisee?.map(user => user?.email);
-        console.log(emails);
+        // console.log(emails);
 
         if (!emails || emails.length === 0) {
             setLoading(false);
@@ -705,63 +717,63 @@ const DashboardADPage = () => {
             return;
         }
 
-        // try {
-        //     const res = await fetch("/api/sendEmailAll", {
-        //         method: 'POST',
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify({ emails })
-        //     });
+        try {
+            const res = await fetch("/api/sendEmailAll", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ emails })
+            });
 
-        //     if (res.ok) {
-        //         // setError("");
-        //         router.refresh("./dashboardtl");
-        //         router.refresh("./dashboardfr");
-        //         router.refresh("./dashboardsh");
+            if (res.ok) {
+                // setError("");
+                router.refresh("./dashboardtl");
+                router.refresh("./dashboardfr");
+                router.refresh("./dashboardsh");
 
-        //         toast.success('Emails sent successfully', {
-        //             position: "top-right",
-        //             autoClose: 2000,
-        //             hideProgressBar: false,
-        //             closeOnClick: true,
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             progress: undefined,
-        //             theme: "light",
-        //         });
+                toast.success('Emails sent successfully', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
 
-        //         // Optionally, you can update reminders or any other logic here
+                // Optionally, you can update reminders or any other logic here
 
-        //     } else {
-        //         toast.error('Try again later', {
-        //             position: "top-right",
-        //             autoClose: 2000,
-        //             hideProgressBar: false,
-        //             closeOnClick: true,
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             progress: undefined,
-        //             theme: "light",
-        //         });
-        //         // setError("");
-        //     }
-        // } catch (err) {
-        //     toast.error('Try again later', {
-        //         position: "top-right",
-        //         autoClose: 2000,
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //         theme: "light",
-        //     });
-        //     // setError("");
-        // }
-        // finally {
-        //     setLoading(false);
-        // }
+            } else {
+                toast.error('Try again later', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                // setError("");
+            }
+        } catch (err) {
+            toast.error('Try again later', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            // setError("");
+        }
+        finally {
+            setLoading(false);
+        }
 
         setLoading(false);
     };
